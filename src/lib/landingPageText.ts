@@ -1,3 +1,4 @@
+// Set the languages that will be used in the webapp
 export type Language = "pt" | "es" | "en";
 
 export const landingPageText = {
