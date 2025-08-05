@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -8,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Atende.ai - Atendimento inteligente. Escalável. 24/7.",
+  title: "WhatsBot - Chatbot para WhatsApp em 5 minutos",
   description:
-    "Plataforma brasileira de agentes de voz com inteligência artificial para automatizar o atendimento por telefone de empresas de qualquer porte.",
+    "Crie seu chatbot para WhatsApp em 5 minutos. Conecte seu número, adicione uma planilha Google e pronto! Sem código, sem reuniões, sem complicação.",
 };
 
 export default function RootLayout({
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="dark">
       <body className={`${inter.variable} antialiased font-sans`}>
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

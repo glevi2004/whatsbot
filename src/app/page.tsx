@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,9 +10,10 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  Bot,
-  Phone,
-  Calendar,
+  MessageCircle,
+  Smartphone,
+  Sheet,
+  Zap,
   BarChart3,
   Settings,
   HeadphonesIcon,
@@ -24,10 +27,18 @@ import {
   ArrowRight,
   Sparkles,
   Clock,
-  TrendingUp,
+  Upload,
+  Link,
+  Users,
+  CreditCard,
+  FileSpreadsheet,
 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -35,13 +46,16 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Bot className="w-5 h-5 text-primary-foreground" />
+              <MessageCircle className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">Atende.ai</span>
+            <span className="text-xl font-bold">{t.brandName}</span>
           </div>
-          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-            Falar com especialista
-          </Button>
+          <div className="flex items-center space-x-4">
+            <LanguageSelector />
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              {t.ctaButton}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -50,19 +64,15 @@ export default function Home() {
         <div className="absolute inset-0 brasil-gradient-subtle"></div>
         <div className="container mx-auto text-center relative z-10">
           <Badge variant="brasil" className="mb-6 animate-float">
-            🇧🇷 Feito no Brasil para empresas brasileiras
+            {t.badge}
           </Badge>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-chart-2 to-chart-3 bg-clip-text text-transparent">
-            Atendimento inteligente.
-            <br />
-            Escalável. 24/7.
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-chart-2 to-chart-3 bg-clip-text text-transparent whitespace-pre-line">
+            {t.heroTitle}
           </h1>
 
           <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-            A plataforma brasileira de agentes de voz com IA que automatiza o
-            atendimento por telefone da sua empresa. Ideal para restaurantes,
-            clínicas, salões e qualquer negócio que recebe muitas ligações.
+            {t.heroDescription}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -70,27 +80,77 @@ export default function Home() {
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg"
             >
-              Comece agora grátis
+              {t.startFreeButton}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-              Ver demonstração
+              {t.watchDemoButton}
             </Button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="flex items-center justify-center space-x-2 text-muted-foreground">
               <CheckCircle className="w-5 h-5 text-chart-2" />
-              <span>Setup em minutos</span>
+              <span>{t.features.setup}</span>
             </div>
             <div className="flex items-center justify-center space-x-2 text-muted-foreground">
               <CheckCircle className="w-5 h-5 text-chart-2" />
-              <span>Suporte humano 24/7</span>
+              <span>{t.features.selfService}</span>
             </div>
             <div className="flex items-center justify-center space-x-2 text-muted-foreground">
               <CheckCircle className="w-5 h-5 text-chart-2" />
-              <span>Português nativo</span>
+              <span>{t.features.freeTrial}</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">{t.howItWorks.title}</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              {t.howItWorks.subtitle}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card className="text-center p-8 hover:shadow-lg transition-all duration-300">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Smartphone className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">
+                {t.howItWorks.steps.connect.title}
+              </h3>
+              <p className="text-muted-foreground">
+                {t.howItWorks.steps.connect.description}
+              </p>
+            </Card>
+
+            <Card className="text-center p-8 hover:shadow-lg transition-all duration-300">
+              <div className="w-16 h-16 bg-chart-2/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FileSpreadsheet className="w-8 h-8 text-chart-2" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">
+                {t.howItWorks.steps.addData.title}
+              </h3>
+              <p className="text-muted-foreground">
+                {t.howItWorks.steps.addData.description}
+              </p>
+            </Card>
+
+            <Card className="text-center p-8 hover:shadow-lg transition-all duration-300">
+              <div className="w-16 h-16 bg-chart-3/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Zap className="w-8 h-8 text-chart-3" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">
+                {t.howItWorks.steps.goLive.title}
+              </h3>
+              <p className="text-muted-foreground">
+                {t.howItWorks.steps.goLive.description}
+              </p>
+            </Card>
           </div>
         </div>
       </section>
@@ -100,11 +160,10 @@ export default function Home() {
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">
-              Funcionalidades principais
+              {t.featuresSection.title}
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Tudo que você precisa para automatizar e melhorar o atendimento da
-              sua empresa
+              {t.featuresSection.subtitle}
             </p>
           </div>
 
@@ -112,12 +171,13 @@ export default function Home() {
             <Card className="group hover:shadow-lg transition-all duration-300 border-border/50 hover:border-primary/20 animate-float">
               <CardHeader>
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Bot className="w-6 h-6 text-primary" />
+                  <MessageCircle className="w-6 h-6 text-primary" />
                 </div>
-                <CardTitle>Agente de voz personalizado</CardTitle>
+                <CardTitle>
+                  {t.featuresSection.features.smartReplies.title}
+                </CardTitle>
                 <CardDescription>
-                  IA treinada especificamente para o seu negócio, entendendo
-                  contexto e fluxos únicos
+                  {t.featuresSection.features.smartReplies.description}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -125,12 +185,11 @@ export default function Home() {
             <Card className="group hover:shadow-lg transition-all duration-300 border-border/50 hover:border-chart-2/20 animate-float-delay">
               <CardHeader>
                 <div className="w-12 h-12 bg-chart-2/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-chart-2/20 transition-colors">
-                  <Phone className="w-6 h-6 text-chart-2" />
+                  <Sheet className="w-6 h-6 text-chart-2" />
                 </div>
-                <CardTitle>Atendimento receptivo e ativo</CardTitle>
+                <CardTitle>{t.featuresSection.features.sheets.title}</CardTitle>
                 <CardDescription>
-                  Recebe ligações dos clientes e faz chamadas automáticas para
-                  lembretes e cobranças
+                  {t.featuresSection.features.sheets.description}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -138,12 +197,13 @@ export default function Home() {
             <Card className="group hover:shadow-lg transition-all duration-300 border-border/50 hover:border-chart-3/20 animate-float">
               <CardHeader>
                 <div className="w-12 h-12 bg-chart-3/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-chart-3/20 transition-colors">
-                  <Settings className="w-6 h-6 text-chart-3" />
+                  <Upload className="w-6 h-6 text-chart-3" />
                 </div>
-                <CardTitle>Integração com seus sistemas</CardTitle>
+                <CardTitle>
+                  {t.featuresSection.features.uploads.title}
+                </CardTitle>
                 <CardDescription>
-                  Conecta com seu CRM, sistema de agendamento e outras
-                  ferramentas que você já usa
+                  {t.featuresSection.features.uploads.description}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -153,10 +213,11 @@ export default function Home() {
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <BarChart3 className="w-6 h-6 text-primary" />
                 </div>
-                <CardTitle>Painel com métricas</CardTitle>
+                <CardTitle>
+                  {t.featuresSection.features.dashboard.title}
+                </CardTitle>
                 <CardDescription>
-                  Acompanhe histórico de interações, performance e resultados em
-                  tempo real
+                  {t.featuresSection.features.dashboard.description}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -164,12 +225,11 @@ export default function Home() {
             <Card className="group hover:shadow-lg transition-all duration-300 border-border/50 hover:border-chart-2/20 animate-float">
               <CardHeader>
                 <div className="w-12 h-12 bg-chart-2/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-chart-2/20 transition-colors">
-                  <TrendingUp className="w-6 h-6 text-chart-2" />
+                  <CreditCard className="w-6 h-6 text-chart-2" />
                 </div>
-                <CardTitle>Treinamento contínuo</CardTitle>
+                <CardTitle>{t.featuresSection.features.pix.title}</CardTitle>
                 <CardDescription>
-                  O agente aprende constantemente com os dados da sua empresa
-                  para melhorar
+                  {t.featuresSection.features.pix.description}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -177,12 +237,11 @@ export default function Home() {
             <Card className="group hover:shadow-lg transition-all duration-300 border-border/50 hover:border-chart-3/20 animate-float-delay">
               <CardHeader>
                 <div className="w-12 h-12 bg-chart-3/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-chart-3/20 transition-colors">
-                  <HeadphonesIcon className="w-6 h-6 text-chart-3" />
+                  <Users className="w-6 h-6 text-chart-3" />
                 </div>
-                <CardTitle>Suporte humano</CardTitle>
+                <CardTitle>{t.featuresSection.features.team.title}</CardTitle>
                 <CardDescription>
-                  Equipe Atende.ai disponível durante todo o processo de
-                  implementação
+                  {t.featuresSection.features.team.description}
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -194,10 +253,11 @@ export default function Home() {
       <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Empresas ideais</h2>
+            <h2 className="text-4xl font-bold mb-4">
+              {t.targetBusiness.title}
+            </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Perfeito para negócios que recebem muitas ligações e querem
-              otimizar o atendimento
+              {t.targetBusiness.subtitle}
             </p>
           </div>
 
@@ -205,28 +265,32 @@ export default function Home() {
             {[
               {
                 icon: Utensils,
-                label: "Restaurantes e delivery",
+                label: t.targetBusiness.businesses.restaurants,
                 color: "text-chart-1",
               },
               {
                 icon: Stethoscope,
-                label: "Clínicas e consultórios",
+                label: t.targetBusiness.businesses.clinics,
                 color: "text-chart-2",
               },
               {
                 icon: Scissors,
-                label: "Salões e barbearias",
+                label: t.targetBusiness.businesses.salons,
                 color: "text-chart-3",
               },
               {
                 icon: Dumbbell,
-                label: "Academias e estúdios",
+                label: t.targetBusiness.businesses.gyms,
                 color: "text-chart-1",
               },
-              { icon: Heart, label: "Petshops", color: "text-chart-2" },
+              {
+                icon: Heart,
+                label: t.targetBusiness.businesses.petshops,
+                color: "text-chart-2",
+              },
               {
                 icon: Building2,
-                label: "Negócios locais",
+                label: t.targetBusiness.businesses.ecommerce,
                 color: "text-chart-3",
               },
             ].map((business, index) => (
@@ -244,31 +308,120 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Pricing Section */}
       <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">{t.pricing.title}</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              {t.pricing.subtitle}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <Card className="p-8 hover:shadow-lg transition-all duration-300">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-2">
+                  {t.pricing.plans.starter.name}
+                </h3>
+                <div className="text-4xl font-bold text-primary mb-4">
+                  {t.pricing.plans.starter.price}
+                  <span className="text-lg text-muted-foreground">
+                    {t.pricing.plans.starter.period}
+                  </span>
+                </div>
+                <p className="text-muted-foreground mb-6">
+                  {t.pricing.plans.starter.description}
+                </p>
+                <ul className="space-y-3 mb-8 text-left">
+                  {t.pricing.plans.starter.features.map((feature, index) => (
+                    <li key={index} className="flex items-center space-x-2">
+                      <CheckCircle className="w-5 h-5 text-chart-2" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button className="w-full">{t.pricing.startFreeButton}</Button>
+              </div>
+            </Card>
+
+            <Card className="p-8 hover:shadow-lg transition-all duration-300 border-primary/50 relative">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <Badge className="bg-primary text-primary-foreground">
+                  {t.pricing.mostPopular}
+                </Badge>
+              </div>
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-2">
+                  {t.pricing.plans.professional.name}
+                </h3>
+                <div className="text-4xl font-bold text-primary mb-4">
+                  {t.pricing.plans.professional.price}
+                  <span className="text-lg text-muted-foreground">
+                    {t.pricing.plans.professional.period}
+                  </span>
+                </div>
+                <p className="text-muted-foreground mb-6">
+                  {t.pricing.plans.professional.description}
+                </p>
+                <ul className="space-y-3 mb-8 text-left">
+                  {t.pricing.plans.professional.features.map(
+                    (feature, index) => (
+                      <li key={index} className="flex items-center space-x-2">
+                        <CheckCircle className="w-5 h-5 text-chart-2" />
+                        <span>{feature}</span>
+                      </li>
+                    )
+                  )}
+                </ul>
+                <Button className="w-full">{t.pricing.startFreeButton}</Button>
+              </div>
+            </Card>
+
+            <Card className="p-8 hover:shadow-lg transition-all duration-300">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-2">
+                  {t.pricing.plans.enterprise.name}
+                </h3>
+                <div className="text-4xl font-bold text-primary mb-4">
+                  {t.pricing.plans.enterprise.price}
+                  <span className="text-lg text-muted-foreground">
+                    {t.pricing.plans.enterprise.period}
+                  </span>
+                </div>
+                <p className="text-muted-foreground mb-6">
+                  {t.pricing.plans.enterprise.description}
+                </p>
+                <ul className="space-y-3 mb-8 text-left">
+                  {t.pricing.plans.enterprise.features.map((feature, index) => (
+                    <li key={index} className="flex items-center space-x-2">
+                      <CheckCircle className="w-5 h-5 text-chart-2" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button className="w-full">{t.pricing.startFreeButton}</Button>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-20 px-4 bg-muted/30">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <Badge variant="brasil" className="mb-6">
                 <Sparkles className="w-4 h-4 mr-2" />
-                Nosso diferencial
+                {t.benefits.badge}
               </Badge>
-              <h2 className="text-4xl font-bold mb-6">
-                Nós cuidamos de tudo para você
-              </h2>
+              <h2 className="text-4xl font-bold mb-6">{t.benefits.title}</h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Sua empresa só precisa nos fornecer as informações ou integrar
-                com seus sistemas atuais. A partir disso, configuramos um agente
-                personalizado que entende seu negócio.
+                {t.benefits.description}
               </p>
               <div className="space-y-4">
-                {[
-                  "Confirma agendamentos automaticamente",
-                  "Responde dúvidas frequentes dos clientes",
-                  "Envia lembretes por telefone",
-                  "Faz cobranças de forma natural",
-                  "Oferece suporte técnico básico",
-                ].map((benefit, index) => (
+                {t.benefits.benefitsList.map((benefit, index) => (
                   <div key={index} className="flex items-center space-x-3">
                     <CheckCircle className="w-5 h-5 text-chart-2 flex-shrink-0" />
                     <span>{benefit}</span>
@@ -281,9 +434,11 @@ export default function Home() {
               <div className="aspect-square bg-gradient-to-br from-primary/20 via-chart-2/20 to-chart-3/20 rounded-3xl p-8 flex items-center justify-center">
                 <div className="text-center">
                   <Clock className="w-24 h-24 mx-auto mb-6 text-primary animate-pulse" />
-                  <h3 className="text-2xl font-bold mb-2">24/7</h3>
+                  <h3 className="text-2xl font-bold mb-2">
+                    {t.benefits.timeIndicator.number}
+                  </h3>
                   <p className="text-muted-foreground">
-                    Sempre disponível para seus clientes
+                    {t.benefits.timeIndicator.description}
                   </p>
                 </div>
               </div>
@@ -296,25 +451,22 @@ export default function Home() {
       <section className="py-20 px-4 bg-gradient-to-br from-card via-card to-muted/20 relative overflow-hidden">
         <div className="absolute inset-0 brasil-gradient-subtle"></div>
         <div className="container mx-auto text-center relative z-10">
-          <h2 className="text-4xl font-bold mb-6">
-            Deixe que a inteligência artificial
-            <br />
-            atenda por você
+          <h2 className="text-4xl font-bold mb-6 whitespace-pre-line">
+            {t.cta.title}
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Fale com a Atende.ai e transforme o atendimento da sua empresa.
-            Setup rápido, suporte completo e resultados desde o primeiro dia.
+            {t.cta.description}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg"
             >
-              Começar agora - É grátis
+              {t.cta.startTrialButton}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <Button variant="outline" size="lg" className="px-8 py-4 text-lg">
-              Agendar demonstração
+              {t.cta.talkToTeamButton}
             </Button>
           </div>
         </div>
@@ -326,13 +478,12 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <Bot className="w-5 h-5 text-primary-foreground" />
+                <MessageCircle className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">Atende.ai</span>
+              <span className="text-xl font-bold">{t.footer.brandName}</span>
             </div>
             <p className="text-muted-foreground text-center md:text-right">
-              © 2024 Atende.ai - Atendimento inteligente para empresas
-              brasileiras
+              {t.footer.copyright}
             </p>
           </div>
         </div>
